@@ -1,5 +1,7 @@
 package com.Practica.practicaSpringBoot.controllers;
 import com.Practica.practicaSpringBoot.domain.Customer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,20 +21,27 @@ public class CustomerController {
 
     // @GetMapping("/clients") -- Como usamos RequestMapping quitamos esto
     @GetMapping
-    public List<Customer> getCustomer() {
-        return customers;
+    public ResponseEntity<List<Customer>> getCustomer() {
+        // En vez de retornar los clientes retornamos un objeto ResponseEntity
+        return ResponseEntity.ok(customers); // Retorna codigos de respuesta de tipo 200
     }
 
     // @GetMapping("/clients/{username}") En este caso eliminamos la ruta pero dejamos el parametro
     @GetMapping("/{username}")
-    public Customer getClient(@PathVariable String username) {
+    // el signo indica que la respuesta varia, puede ser un objeto de tipo customer
+    // o puede ser un String como mensaje de error
+    public ResponseEntity<?> getClient(@PathVariable String username) {
         for (Customer c : customers) {
 
             if (c.getUserName().equalsIgnoreCase(username)) {
-                return c;
+                // En vez de retornar el objeto actual de la lista solamente
+                // lo agregamos con un codigo de respuesta
+                return ResponseEntity.ok(c);
             }
         }
-        return null;
+        // Ahora en vez de retornar null si no se cumplia la condicion
+        // ahora retornamos un codigo de respuesta
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado con username: " + username);
     }
     // Agregamos post porque queremos agregar nuevos elementos a la base de datos
     /* Usamos requestbody para permitirnos recibir la informacion para agregar al nuevo cliente
