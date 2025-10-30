@@ -48,14 +48,14 @@ public class CustomerController {
     Esta informacion vendra en formato JSON */
     // @PostMapping("/clients") quitamos esto porque usamos RequestMapping
     @PostMapping
-    public Customer postClient(@RequestBody Customer customer) {
+    public ResponseEntity <?> postClient(@RequestBody Customer customer) {
         customers.add(customer);
-        return customer;
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente creado existosamente: " + customer.getUserName());
     }
 
    //  @PutMapping("/clients") // Actualiza la informacion ya existente
     @PutMapping
-    public Customer putClient(@RequestBody Customer customer) { // Como pasamos la informacion por JSON usamos RequestBody
+    public ResponseEntity<?> putClient(@RequestBody Customer customer) { // Como pasamos la informacion por JSON usamos RequestBody
         for (Customer c: customers) {
             // Comparamos el customer dentro de la lista con el que le estemos pasando
             if (c.getId() == customer.getId()) {
@@ -64,32 +64,33 @@ public class CustomerController {
                 c.setUserName(customer.getUserName());
                 c.setPassword(customer.getPassword());
 
-                return c;
+                return ResponseEntity.ok("Cliente modificado satisfactoriamente " + customer.getId());
             }
         }
-        return null; // Luego vamos a corregir esto porque es mala practica
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado: " + customer.getId());
     }
 
     // En este caso el usuario debe proporcionar el id del usuario a eliminar
     // Esto se logra pasandolo como parametro por medio de la URL
     // @DeleteMapping("/clients/{id}")
     @DeleteMapping("/{id}")
-    public Customer deleteClient(@PathVariable int id) {
+    public ResponseEntity<?> deleteClient(@PathVariable int id) {
         for (Customer c : customers) {
 
            if (c.getId() == id) {
                customers.remove(c); // La variable c contiene el cliente a eliminar
-               return c;
+               // El id se puede obtener del parametro web
+               return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Cliente eliminado satisfactoriamente " + id);
            }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado con el id: " + id);
     }
 
     // Vamos a recibir un JSON para agregar la informacion a modificar
     // No recibimos parametro web para el id ya que lo vamos a especificar en el JSON
     //@PatchMapping("/clients")
     @PatchMapping
-    public Customer patchClient(@RequestBody Customer customer) {
+    public ResponseEntity<?> patchClient(@RequestBody Customer customer) {
         for (Customer c: customers) {
             if (c.getId() == customer.getId()) {
 
@@ -104,10 +105,10 @@ public class CustomerController {
                 if (customer.getPassword() != null) {
                     c.setPassword(customer.getPassword());
                 }
-                return c;
+                return ResponseEntity.ok("Cliente modificado satisfactoriamente " + customer.getId());
             }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente no encontrado con el id " + customer.getId());
     }
 
 
