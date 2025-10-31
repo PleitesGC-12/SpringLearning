@@ -8,6 +8,11 @@ public class Product {
     private Double price;
     private Integer stock;
 
+    public Product() {
+
+    }
+
+    // Cuando creamos un constructor con parametros el por defecto ya no esta disponible
     public Product (Integer id, String name, Double price, Integer stock) {
         this.id = id;
         this.name = name;

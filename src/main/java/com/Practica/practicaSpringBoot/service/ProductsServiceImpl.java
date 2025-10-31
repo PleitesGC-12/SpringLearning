@@ -9,7 +9,8 @@ import java.util.List;
 @Service
 public class ProductsServiceImpl implements ProductService {
     ArrayList<Product> products = new ArrayList<>();
-
+    // En este caso spring convierte la lista en un formato JSON
+    // A esto se le conoce como serializacion
     public ProductsServiceImpl() {
         products.add(new Product(1, "Laptop" , 799.99, 10 ));
         products.add(new Product(2, "Smartpohone", 499.99 , 25));
