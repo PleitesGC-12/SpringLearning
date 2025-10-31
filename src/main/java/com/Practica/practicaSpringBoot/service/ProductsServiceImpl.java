@@ -1,14 +1,16 @@
 package com.Practica.practicaSpringBoot.service;
 import com.Practica.practicaSpringBoot.model.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Creamos un servicio para que spring almacene y gestione todos los objetos
+@Service
 public class ProductsServiceImpl implements ProductService {
     ArrayList<Product> products = new ArrayList<>();
 
-    public ProductsServiceImpl () {
+    public ProductsServiceImpl() {
         products.add(new Product(1, "Laptop" , 799.99, 10 ));
         products.add(new Product(2, "Smartpohone", 499.99 , 25));
         products.add(new Product(3, "Tablet", 299.99, 15));
