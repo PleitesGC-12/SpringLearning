@@ -1,5 +1,5 @@
 package com.Practica.practicaSpringBoot.controllers;
-import com.Practica.practicaSpringBoot.domain.Customer;
+import com.Practica.practicaSpringBoot.model.Customer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

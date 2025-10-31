@@ -1,4 +1,4 @@
-package com.Practica.practicaSpringBoot.domain;
+package com.Practica.practicaSpringBoot.model;
 
 public class Customer {
      // Attributes

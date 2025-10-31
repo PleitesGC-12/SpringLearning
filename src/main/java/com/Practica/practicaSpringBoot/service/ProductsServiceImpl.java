@@ -1,11 +1,11 @@
 package com.Practica.practicaSpringBoot.service;
-import com.Practica.practicaSpringBoot.domain.Product;
-import org.springframework.stereotype.Service;
+import com.Practica.practicaSpringBoot.model.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductsServiceImpl {
+public class ProductsServiceImpl implements ProductService {
     ArrayList<Product> products = new ArrayList<>();
 
     public ProductsServiceImpl () {
@@ -15,6 +15,8 @@ public class ProductsServiceImpl {
         products.add(new Product(4, "Smartwatch", 199.99, 30));
     }
 
+    // Implementacion del metodo de la interfaz
+    @Override
     public List<Product> getProducts() {
         return products;
     }
